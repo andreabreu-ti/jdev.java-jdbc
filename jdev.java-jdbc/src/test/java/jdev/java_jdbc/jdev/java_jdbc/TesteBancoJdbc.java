@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import dao.UserPosDAO;
+import model.BeanUserFone;
 import model.Telefone;
 import model.UserPosJava;
 
@@ -83,6 +84,15 @@ public class TesteBancoJdbc {
 		dao.salvarTelefone(telefone);
 	}
 	
-	
+	@Test
+	public void testeCarregaFoneUser() {
+		UserPosDAO dao = new UserPosDAO();
+		List<BeanUserFone> beanUserFones = dao.listaUserFone(14L);
+		
+		for (BeanUserFone beanUserFone : beanUserFones) {
+			System.out.println(beanUserFone);
+			System.out.println("==========================================================================");
+		}
+	}
 	
 }

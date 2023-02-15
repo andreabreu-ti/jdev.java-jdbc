@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import conexaoJdbc.SingleConnection;
+import model.BeanUserFone;
 import model.Telefone;
 import model.UserPosJava;
 
@@ -41,19 +42,19 @@ public class UserPosDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void salvarTelefone(Telefone telefone) {
 		try {
-			
+
 			String sql = "INSERT INTO public.telefoneuser(numero, tipo, usuariopessoa) VALUES (?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
-			
+
 			statement.setString(1, telefone.getNumero());
 			statement.setString(2, telefone.getTipo());
 			statement.setLong(3, telefone.getUsuario());
 			statement.execute();
 			connection.commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
@@ -80,6 +81,33 @@ public class UserPosDAO {
 		}
 
 		return list;
+	}
+
+	public List<BeanUserFone> listaUserFone(Long idUser) {
+		List<BeanUserFone> beanUserFones = new ArrayList<BeanUserFone>();
+
+		String sql = "select u.nome, t.numero, u.email from telefoneuser t ";
+		sql += "inner join userposjava u on ";
+		sql += "t.usuariopessoa = u.id ";
+		sql += "where u.id = " + idUser;
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				BeanUserFone userFone = new BeanUserFone();
+				userFone.setEmail(resultSet.getString("email"));
+				userFone.setNome(resultSet.getString("nome"));
+				userFone.setNumero(resultSet.getString("numero"));
+				beanUserFones.add(userFone);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return beanUserFones;
 	}
 
 	public UserPosJava buscar(Long id) throws Exception {
@@ -119,7 +147,7 @@ public class UserPosDAO {
 	public void deletar(Long id) {
 		try {
 
-			String sql ="delete from userposjava where id="+id;
+			String sql = "delete from userposjava where id=" + id;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.execute();
 			connection.commit();
