@@ -1,0 +1,4 @@
+select u.nome, t.numero, u.email from telefoneuser t
+inner join userposjava u on
+  t.usuariopessoa = u.id
+where u.id = 13
