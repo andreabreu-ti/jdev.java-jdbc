@@ -1,0 +1,19 @@
+INSERT INTO public.telefoneuser(
+	numero, tipo, usuariopessoa)
+	VALUES ('91991885876', 'celular', 1);
+	
+INSERT INTO public.telefoneuser(
+	numero, tipo, usuariopessoa)
+	VALUES ('91991899976', 'celular', 1);
+	
+INSERT INTO public.telefoneuser(
+	numero, tipo, usuariopessoa)
+	VALUES ('44445533333', 'celular', 6);
+	
+INSERT INTO public.telefoneuser(
+	numero, tipo, usuariopessoa)
+	VALUES ('6666655555', 'celular', 2);
+
+select * from public.userposjava
+
+select * from public.telefoneuser
